@@ -1,0 +1,44 @@
+# Object files
+*.o
+
+# Executable files
+*.out
+*.exe
+
+array_operations
+
+# Assembly listing files
+*.lst
+
+# Debugging files
+*.dSYM/
+*.stackdump
+*.core
+
+# Editor/IDE specific files
+.vscode/
+*.swp
+*~
+.idea/
+*.iml
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Build directories
+build/
+bin/
+obj/
