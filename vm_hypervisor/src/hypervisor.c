@@ -41,16 +41,22 @@ void set_vm_priority(Hypervisor *hypervisor, int vm_index, int priority) {
 }
 
 void switch_vm(Hypervisor *hypervisor) {
-    int highest_priority = -1, next_vm = -1;
-    for (int i = 0; i < hypervisor->vm_count; ++i) {
-        if (hypervisor->vms[i].running && hypervisor->vms[i].priority > highest_priority) {
-            highest_priority = hypervisor->vms[i].priority; next_vm = i;
+    int next_vm = -1, current_priority = hypervisor->vms[hypervisor->current_vm].priority;
+
+    for (int i = 1; i <= hypervisor->vm_count; ++i) {
+        int index = (hypervisor->current_vm + i) % hypervisor->vm_count;
+        VM *candidate = &hypervisor->vms[index];
+
+        if (candidate->running && (candidate->priority > current_priority || next_vm == -1)) {
+            next_vm = index; current_priority = candidate->priority;
         }
     }
+
     if (next_vm != -1) {
-        hypervisor->current_vm = next_vm; printf("Switched to VM %d with priority %d\n", next_vm, highest_priority);
+        hypervisor->current_vm = next_vm;
+        printf("Switched to VM %d with priority %d\n", next_vm, hypervisor->vms[next_vm].priority);
     } else {
-        printf("No running VMs with positive priority found.\n");
+        printf("No running VMs found.\n");
     }
 }
 
