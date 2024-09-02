@@ -24,9 +24,17 @@ private slots:
     void on_createButton_clicked();
     void on_destroyButton_clicked();
     void on_messageButton_clicked();
+    void on_runButton_clicked();
+    void on_pauseButton_clicked();
+    void on_stopButton_clicked();
+    void on_switchButton_clicked();
+    void logMessage(const QString &message);
 
 private:
     Ui::MainWindow *ui;
     void updateTable();
+    void runHypervisor();
+    bool hypervisorRunning;
+    void resetHypervisor();
 };
 #endif // MAINWINDOW_H
