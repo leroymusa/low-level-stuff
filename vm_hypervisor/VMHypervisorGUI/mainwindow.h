@@ -24,10 +24,9 @@ private slots:
     void on_createButton_clicked();
     void on_destroyButton_clicked();
     void on_messageButton_clicked();
-    void updateTable();
 
 private:
     Ui::MainWindow *ui;
-    Hypervisor hypervisor;
+    void updateTable();
 };
 #endif // MAINWINDOW_H

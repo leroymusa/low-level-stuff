@@ -22,78 +22,63 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_createButton_clicked()
 {
-    qDebug() << "Create VM button clicked";
     int program[] = {PUSH, 10, PUSH, 5, ADD, PRINT, HALT};
-    create_vm(&hypervisor, program, 1);
-    updateTable();
-    ui->statusLabel->setText("VM Created");
-    qDebug() << "VM Created. Total VMs:" << hypervisor.vm_count;
+    if (hypervisor.vm_count < MAX_VMS)
+    {
+        create_vm(&hypervisor, program, 1);
+        updateTable();
+        ui->statusLabel->setText("VM Created Successfully");
+    }
+    else
+    {
+        ui->statusLabel->setText("Error: Maximum VM limit reached.");
+    }
 }
 
 void MainWindow::on_destroyButton_clicked()
 {
-    qDebug() << "Destroy VM button clicked";
     if (hypervisor.vm_count > 0)
     {
         destroy_vm(&hypervisor, hypervisor.vm_count - 1);
         updateTable();
-        ui->statusLabel->setText("VM Destroyed");
-        qDebug() << "VM Destroyed. Total VMs:" << hypervisor.vm_count;
+        ui->statusLabel->setText("VM Destroyed Successfully");
     }
     else
     {
-        ui->statusLabel->setText("No VMs to Destroy");
-        qDebug() << "No VMs to destroy";
+        ui->statusLabel->setText("Error: No VM to destroy.");
     }
 }
 
 void MainWindow::on_messageButton_clicked()
 {
-    qDebug() << "Send Message button clicked";
     if (hypervisor.vm_count > 1)
     {
         send_message(&hypervisor, 0, 1, "Hello from GUI");
-        ui->statusLabel->setText("Message Sent");
-        qDebug() << "Message sent from VM 0 to VM 1";
+        ui->statusLabel->setText("Message Sent Successfully");
     }
     else
     {
-        ui->statusLabel->setText("Not Enough VMs to Send Message");
-        qDebug() << "Not enough VMs to send a message";
+        ui->statusLabel->setText("Error: Not enough VMs to send message.");
     }
 }
 
 void MainWindow::updateTable()
 {
-    if (!ui->vmTable)
+    ui->vmTable->setRowCount(hypervisor.vm_count);
+    for (int i = 0; i < hypervisor.vm_count; ++i)
     {
-        return;
-    }
+        if (i >= MAX_VMS) break;
 
-    int rowCount = hypervisor.vm_count;
-    if (rowCount > MAX_VMS)
-    {
-        rowCount = MAX_VMS;
-    }
+        QString runningState = hypervisor.vms[i].running ? "Running" : "Stopped";
+        int priority = hypervisor.vms[i].priority;
 
-    ui->vmTable->setRowCount(rowCount);
-
-    for (int i = 0; i < rowCount; ++i)
-    {
-        VM *vm = &hypervisor.vms[i];
-
-        if (vm->priority < 0 || vm->priority > 100)
-        { // Example validation
-            printf("Invalid VM state detected. Skipping VM index %d\n", i);
-            continue;
+        if (priority < 0 || priority > 10)
+        {
+            priority = 0;
         }
 
-        qDebug() << "Updating table for VM index:" << i;
-        qDebug() << "VM Running State:" << vm->running;
-        qDebug() << "VM Priority:" << vm->priority;
-
         ui->vmTable->setItem(i, 0, new QTableWidgetItem(QString::number(i)));
-        ui->vmTable->setItem(i, 1, new QTableWidgetItem(vm->running ? "Running" : "Stopped"));
-        ui->vmTable->setItem(i, 2, new QTableWidgetItem(QString::number(vm->priority)));
+        ui->vmTable->setItem(i, 1, new QTableWidgetItem(runningState));
+        ui->vmTable->setItem(i, 2, new QTableWidgetItem(QString::number(priority)));
     }
 }
