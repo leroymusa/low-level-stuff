@@ -6,11 +6,24 @@
 #define MSG_QUEUE_SIZE 10
 #define MSG_LENGTH 128
 
-typedef enum {
-    HALT, PUSH, POP, ADD, SUB, MUL, DIV, PRINT, JUMP, JUMP_IF_ZERO, SEND, RECV
+typedef enum
+{
+    HALT,
+    PUSH,
+    POP,
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    PRINT,
+    JUMP,
+    JUMP_IF_ZERO,
+    SEND,
+    RECV
 } OpCode;
 
-typedef struct {
+typedef struct
+{
     int stack[STACK_SIZE];
     int sp, ip, running, *program;
     char memory[MEM_SIZE];

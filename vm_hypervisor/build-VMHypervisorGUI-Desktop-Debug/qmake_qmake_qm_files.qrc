@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+<file alias="VMHypervisorGUI_en_GB.qm">/home/omen/low-level-stuff/vm_hypervisor/build-VMHypervisorGUI-Desktop-Debug/.qm/VMHypervisorGUI_en_GB.qm</file>
+</qresource>
+</RCC>
