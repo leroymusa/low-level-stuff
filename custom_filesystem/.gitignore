@@ -1,0 +1,24 @@
+# Ignore compiled binary files
+custom_filesystem
+direct_disk_test
+
+# Ignore the virtual disk image
+virtual_disk.img
+
+# Ignore any temporary files or backup files created by editors
+*.o
+*.out
+*.bak
+*~
+
+# Ignore object files and other build artifacts
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
