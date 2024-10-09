@@ -1,7 +1,7 @@
 # Ignore compiled binary files
 custom_filesystem
 direct_disk_test
-ystem.c -o custom_filesystem
+"ystem.c -o custom_filesystem"
 
 # Ignore the virtual disk image
 virtual_disk.img
